@@ -5,8 +5,14 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
+  // Top level path
   @Get()
   getHello(): string {
     return this.appService.getHello();
+  }
+
+  @Get('/bye')
+  getBye(): string {
+    return 'Bye!';
   }
 }
