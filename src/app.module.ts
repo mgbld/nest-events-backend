@@ -18,6 +18,8 @@ import { Event } from './event.entity';
       entities: [Event],
       synchronize: true,
     }),
+    // Make a repostory to be injected in this current module
+    TypeOrmModule.forFeature([Event]),
   ],
   controllers: [AppController, EventsController],
   providers: [AppService],
