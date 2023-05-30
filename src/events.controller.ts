@@ -5,6 +5,7 @@ import {
   Get,
   HttpCode,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
 } from '@nestjs/common';
@@ -27,8 +28,10 @@ export class EventsController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id) {
-    return this.repository.findOne(id);
+  async findOne(@Param('id', ParseIntPipe) id) {
+    return this.repository.findOne({
+      where: { id },
+    });
   }
 
   // If JSON comes as input, it would return a JS object.
@@ -42,7 +45,9 @@ export class EventsController {
 
   @Patch(':id')
   async update(@Param('id') id, @Body() input: UpdateEventDto) {
-    const event = await this.repository.findOne(id);
+    const event = await this.repository.findOne({
+      where: { id },
+    });
 
     return await this.repository.save({
       ...event,
