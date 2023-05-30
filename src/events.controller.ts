@@ -8,6 +8,7 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
+import { CreateEventDto } from './create-event.dto';
 
 @Controller('/events')
 export class EventsController {
@@ -26,7 +27,7 @@ export class EventsController {
 
   // If JSON comes as input, it would return a JS object.
   @Post()
-  create(@Body() input) {
+  create(@Body() input: CreateEventDto) {
     return input;
   }
 
