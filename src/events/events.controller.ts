@@ -16,6 +16,8 @@ import { Event } from './event.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+// Pipes can go and apply for a whole class at class level
+// or even on the method
 @Controller('/events')
 export class EventsController {
   constructor(
@@ -28,6 +30,7 @@ export class EventsController {
     return await this.repository.find();
   }
 
+  // If JSON comes as input, it would return a JS object.
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id) {
     return this.repository.findOne({
@@ -35,8 +38,11 @@ export class EventsController {
     });
   }
 
-  // If JSON comes as input, it would return a JS object.
+  // @UsePipes()
   @Post()
+  // Validation groups are for routes. For this to work there has not to be a global validation pipe
+  // Perform different validations upon context
+  // async create(@Body(new ValidationPipe({ groups: ['create']})) input: CreateEventDto) {
   async create(@Body(ValidationPipe) input: CreateEventDto) {
     return await this.repository.save({
       ...input,

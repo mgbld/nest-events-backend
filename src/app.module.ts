@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { EventsController } from './events.controller';
+import { EventsController } from './events/events.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Event } from './event.entity';
+import { Event } from './events/event.entity';
+import { EventsModule } from './events/events.module';
 
 @Module({
   // Static module method to pass some parameters
@@ -18,10 +19,9 @@ import { Event } from './event.entity';
       entities: [Event],
       synchronize: true,
     }),
-    // Make a repostory to be injected in this current module
-    TypeOrmModule.forFeature([Event]),
+    EventsModule,
   ],
-  controllers: [AppController, EventsController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
